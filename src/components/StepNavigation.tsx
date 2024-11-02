@@ -2,6 +2,9 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { AddDealRoutes } from '@/types';
+import { usePathname } from 'next/navigation';
+import { set } from 'zod';
+import { useEffect, useState } from 'react';
 
 const steps = [
   {
@@ -23,13 +26,20 @@ const steps = [
 ];
 
 export default function StepNavigation() {
-  const currentPath = '';
+  const pathName = usePathname();
+  const currentPath = pathName.split('/').pop();
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(()=>{
+    const step = steps.findIndex((step) => step.route === currentPath);
+    setCurrentStep(step);
+  }, [currentPath])
 
   return (
     <div className="mb-12 mt-4 lg:mb-0 min-w-60">
       {/* back button */}
       <Link
-        href={'/add'}
+        href={steps[currentStep - 1]?.link || steps[0].link}
         className="mb-4 flex items-center gap-2 text-xl disabled:text-white/50 lg:mb-12 lg:gap-5"
       >
         Back
