@@ -55,6 +55,3 @@ export default function Input({
     </div>
   );
 }
-function setUpdatedDeal(arg0: (prev: any) => any) {
-  throw new Error('Function not implemented.');
-}
